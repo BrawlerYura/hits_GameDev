@@ -5,7 +5,7 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638216337821028523
+      ticks: 638216383673507625
     m_Hash: 380162811
   m_LockFileStatus:
     m_FilePath: K:/Files/UEProj/hits_GameDev/GameName/Packages/packages-lock.json
@@ -13,7 +13,7 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638216337821028523
+      ticks: 638216383673507625
     m_Hash: 3439125906
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
