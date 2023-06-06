@@ -25,7 +25,7 @@ MonoBehaviour:
   runDeccelAmount: 22.727272
   accelInAir: 0.654
   deccelInAir: 0.654
-  doConserveMomentum: 0
+  doConserveMomentum: 1
   jumpHeight: 3.5
   jumpTimeToApex: 0.3
   jumpForce: 23.333332
@@ -38,8 +38,8 @@ MonoBehaviour:
   wallJumpRunLerp: 0.503
   wallJumpTime: 0.154
   doTurnOnWallJump: 0
-  slideSpeed: 0
-  slideAccel: 0
+  slideSpeed: 10
+  slideAccel: 5
   coyoteTime: 0.1
   jumpInputBufferTime: 0.1
   dashAmount: 1
