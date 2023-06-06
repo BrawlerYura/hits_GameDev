@@ -1,2 +1,0 @@
-libburst-11vm-14.dylib filter=lfs diff=lfs merge=lfs -text
-*.dylib filter=lfs diff=lfs merge=lfs -text
