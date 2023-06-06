@@ -1,18 +1,8 @@
-/*
-	Created by @DawnosaurDev at youtube.com/c/DawnosaurStudios
-	Thanks so much for checking this out and I hope you find it helpful! 
-	If you have any further queries, questions or feedback feel free to reach out on my twitter or leave a comment on youtube :D
-
-	Feel free to use this in your own games, and I'd love to see anything you make!
- */
-
 using System.Collections;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    //Scriptable object which holds all the player's movement parameters. If you don't want to use it
-    //just paste in all the parameters, though you will need to manuly change all references in this script
     public PlayerData Data;
 
     #region COMPONENTS
@@ -205,7 +195,6 @@ public class PlayerMovement : MonoBehaviour
         #region DASH CHECKS
         if (CanDash() && LastPressedDashTime > 0)
         {
-            //Freeze game for split second. Adds juiciness and a bit of forgiveness over directional input
             Sleep(Data.dashSleepTime);
 
             //If not direction pressed, dash forward
@@ -287,10 +276,6 @@ public class PlayerMovement : MonoBehaviour
                 Run(Data.wallJumpRunLerp);
             else
                 Run(1);
-        }
-        else if (_isDashAttacking)
-        {
-            Run(Data.dashEndRunLerp);
         }
 
         //Handle Slide
@@ -386,14 +371,6 @@ public class PlayerMovement : MonoBehaviour
 
         //Convert this to a vector and apply to rigidbody
         RB.AddForce(movement * Vector2.right, ForceMode2D.Force);
-        Debug.Log(accelRate);
-        Debug.Log(movement);
-        Debug.Log(speedDif);
-        /*
-		 * For those interested here is what AddForce() will do
-		 * RB.velocity = new Vector2(RB.velocity.x + (Time.fixedDeltaTime  * speedDif * accelRate) / RB.mass, RB.velocity.y);
-		 * Time.fixedDeltaTime is by default in Unity 0.02 seconds equal to 50 FixedUpdate() calls per second
-		*/
     }
 
     private void Turn()
@@ -472,8 +449,23 @@ public class PlayerMovement : MonoBehaviour
         while (Time.time - startTime <= Data.dashAttackTime)
         {
             RB.velocity = dir.normalized * Data.dashSpeed;
-            //Pauses the loop until the next frame, creating something of a Update loop. 
-            //This is a cleaner implementation opposed to multiple timers and this coroutine approach is actually what is used in Celeste :D
+
+            // Check for collision with JumpPad
+            if (Physics2D.OverlapBox(_groundCheckPoint.position, _groundCheckSize, 0, _groundLayer))
+            {
+                startTime = Time.time;
+
+                _isDashAttacking = false;
+
+                //Begins the "end" of our dash where we return some control to the player but still limit run acceleration (see Update() and Run())
+                SetGravityScale(Data.gravityScale);
+
+                //Dash over
+                IsDashing = false;
+
+                break;
+            }
+
             yield return null;
         }
 
@@ -586,5 +578,3 @@ public class PlayerMovement : MonoBehaviour
     }
     #endregion
 }
-
-// created by Dawnosaur :D

@@ -994,7 +994,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 200559483}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.0010000169, y: -0.52, z: 0}
+  m_LocalPosition: {x: 0.0010000169, y: -0.55, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1222,7 +1222,7 @@ GameObject:
   - component: {fileID: 1125997453}
   - component: {fileID: 1125997452}
   - component: {fileID: 1125997457}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: FallingPlatform
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -1316,7 +1316,7 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: dc56e42f02f791e4ca1aae44b59581fc, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1586,7 +1586,7 @@ GameObject:
   - component: {fileID: 1501321458}
   - component: {fileID: 1501321457}
   - component: {fileID: 1501321456}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: JumpPad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1605,6 +1605,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 28feadd4f820c694bb23d10dfb977be9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bounce: 30
 --- !u!212 &1501321457
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1666,7 +1667,7 @@ BoxCollider2D:
   m_GameObject: {fileID: 1501321455}
   m_Enabled: 1
   m_Density: 1
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: dc56e42f02f791e4ca1aae44b59581fc, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1689,7 +1690,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.000000029802322, y: 0.0008404404}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -1700,7 +1701,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.3, y: 0.3}
+  m_Size: {x: 0.3188753, y: 0.15712139}
   m_EdgeRadius: 0
 --- !u!4 &1501321459
 Transform:
