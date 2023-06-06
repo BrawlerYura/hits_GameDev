@@ -4,14 +4,12 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
-    //Scriptable object which holds all the player's movement parameters. If you don't want to use it
-    //just paste in all the parameters, though you will need to manuly change all references in this script
     public PlayerData Data;
 
     #region COMPONENTS
     public Rigidbody2D RB { get; private set; }
 
-    public PlayerAnimator AnimHandler { get; private set; }
+    public Animator animator;
 
     private Controls controls;
     #endregion
@@ -75,7 +73,6 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         RB = GetComponent<Rigidbody2D>();
-        AnimHandler = GetComponent<PlayerAnimator>();
         controls = new Controls();
 
         #region INPUTSYSTEM HANDLER
@@ -122,7 +119,6 @@ public class PlayerMovement : MonoBehaviour
 
         if (_moveInput.x != 0)
             CheckDirectionToFace(_moveInput.x > 0);
-
         #endregion
 
         #region COLLISION CHECKS
@@ -133,7 +129,7 @@ public class PlayerMovement : MonoBehaviour
             {
                 if (LastOnGroundTime < -0.1f)
                 {
-                    AnimHandler.justLanded = true;
+                    //AnimHandler.justLanded = true;
                 }
 
                 LastOnGroundTime = Data.coyoteTime; //if so sets the lastGrounded to coyoteTime
@@ -184,9 +180,8 @@ public class PlayerMovement : MonoBehaviour
                 _isJumpCut = false;
                 _isJumpFalling = false;
                 Jump();
-
-                AnimHandler.startedJumping = true;
             }
+
             //WALL JUMP
             else if (CanWallJump() && LastPressedJumpTime > 0)
             {
@@ -277,6 +272,37 @@ public class PlayerMovement : MonoBehaviour
             SetGravityScale(0);
         }
         #endregion
+
+        #region ANIMATOR
+
+        animator.SetFloat("Speed", Mathf.Abs(_moveInput.x));
+        animator.SetFloat("Vertical speed", Mathf.Abs(RB.velocity.y));
+
+        if (IsJumping)
+        {
+            animator.SetBool("isJumping", true);
+        }else
+        {
+            animator.SetBool("isJumping", false);
+        }
+
+        if(RB.velocity.y < 0)
+        {
+            animator.SetBool("isUp", false);
+        }
+        else if (RB.velocity.y > 0)
+        {
+            animator.SetBool("isUp", true);
+        }
+
+        if (IsDashing)
+        {
+            animator.SetBool("IsDashAttacking", true);
+        }else
+        {
+            animator.SetBool("IsDashAttacking", false);
+        }
+        #endregion
     }
 
     private void FixedUpdate()
@@ -326,9 +352,6 @@ public class PlayerMovement : MonoBehaviour
 
     private void Sleep(float duration)
     {
-        //Method used so we don't need to call StartCoroutine everywhere
-        //nameof() notation means we don't need to input a string directly.
-        //Removes chance of spelling mistakes and will improve error messages if any
         StartCoroutine(nameof(PerformSleep), duration);
     }
 
@@ -387,9 +410,6 @@ public class PlayerMovement : MonoBehaviour
 
         //Convert this to a vector and apply to rigidbody
         RB.AddForce(movement * Vector2.right, ForceMode2D.Force);
-        Debug.Log(accelRate);
-        Debug.Log(movement);
-        Debug.Log(speedDif);
         /*
 		 * For those interested here is what AddForce() will do
 		 * RB.velocity = new Vector2(RB.velocity.x + (Time.fixedDeltaTime  * speedDif * accelRate) / RB.mass, RB.velocity.y);

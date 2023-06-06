@@ -1111,7 +1111,6 @@ GameObject:
   - component: {fileID: 1491092713}
   - component: {fileID: 1491092712}
   - component: {fileID: 1491092711}
-  - component: {fileID: 1491092715}
   - component: {fileID: 1491092717}
   - component: {fileID: 1491092716}
   m_Layer: 6
@@ -1206,6 +1205,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Data: {fileID: 11400000, guid: 53b259bff15a03b439cbe4a8d0d365e6, type: 2}
+  animator: {fileID: 1491092717}
   _groundCheckPoint: {fileID: 307603431}
   _groundCheckSize: {x: 0.8, y: 0.1}
   _frontWallCheckPoint: {fileID: 227927736}
@@ -1230,19 +1230,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1491092715
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1491092710}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c15f127806d852f4fadf624633fb62d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  currentVelY: 0
 --- !u!212 &1491092716
 SpriteRenderer:
   m_ObjectHideFlags: 0
