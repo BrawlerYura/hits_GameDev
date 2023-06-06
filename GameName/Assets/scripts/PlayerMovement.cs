@@ -1,13 +1,6 @@
-/*
-	Created by @DawnosaurDev at youtube.com/c/DawnosaurStudios
-	Thanks so much for checking this out and I hope you find it helpful! 
-	If you have any further queries, questions or feedback feel free to reach out on my twitter or leave a comment on youtube :D
-
-	Feel free to use this in your own games, and I'd love to see anything you make!
- */
-
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -17,8 +10,10 @@ public class PlayerMovement : MonoBehaviour
 
     #region COMPONENTS
     public Rigidbody2D RB { get; private set; }
-    //Script to handle all player animations, all references can be safely removed if you're importing into your own project.
+
     public PlayerAnimator AnimHandler { get; private set; }
+
+    private Controls controls;
     #endregion
 
     #region STATE PARAMETERS
@@ -81,7 +76,27 @@ public class PlayerMovement : MonoBehaviour
     {
         RB = GetComponent<Rigidbody2D>();
         AnimHandler = GetComponent<PlayerAnimator>();
+        controls = new Controls();
+
+        #region INPUTSYSTEM HANDLER
+        controls.Main.Jump.performed += context => OnJumpInput();
+        controls.Main.Jump.canceled += context => OnJumpUpInput();
+
+        controls.Main.Dash.performed += context => OnDashInput();
+        #endregion
     }
+
+    #region CONTROLS METHODS
+    private void OnEnable()
+    {
+        controls.Enable();
+    }
+
+    private void onDesable()
+    {
+        controls.Disable();
+    }
+    #endregion
 
     private void Start()
     {
@@ -101,27 +116,13 @@ public class PlayerMovement : MonoBehaviour
         LastPressedDashTime -= Time.deltaTime;
         #endregion
 
-        #region INPUT HANDLER
+        #region MOVE HANDLER
         _moveInput.x = Input.GetAxisRaw("Horizontal");
         _moveInput.y = Input.GetAxisRaw("Vertical");
 
         if (_moveInput.x != 0)
             CheckDirectionToFace(_moveInput.x > 0);
 
-        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.C) || Input.GetKeyDown(KeyCode.J))
-        {
-            OnJumpInput();
-        }
-
-        if (Input.GetKeyUp(KeyCode.Space) || Input.GetKeyUp(KeyCode.C) || Input.GetKeyUp(KeyCode.J))
-        {
-            OnJumpUpInput();
-        }
-
-        if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.K))
-        {
-            OnDashInput();
-        }
         #endregion
 
         #region COLLISION CHECKS
